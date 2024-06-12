@@ -1,11 +1,12 @@
 import sys
 import copy
 from collections import deque
+
 input = sys.stdin.readline
 
 k, m = map(int, input().split())
 
-visited = [[False]*5 for _ in range(5)]
+visited = [[False] * 5 for _ in range(5)]
 
 map_list = [[] for _ in range(5)]
 
@@ -21,49 +22,51 @@ for w in wall_list:
     q.append(w)
 
 
-def spin_90 (map_list, center_point):
+def spin_90(map_list, center_point):
     x, y = center_point
     x -= 2
     y -= 2
     map_ch = copy.deepcopy(map_list)
-    map_ch[x+0][y+0] = map_list[x+2][y+0]
-    map_ch[x+0][y+1] = map_list[x+1][y+0]
-    map_ch[x+0][y+2] = map_list[x+0][y+0]
-    map_ch[x+1][y+2] = map_list[x+0][y+1]
-    map_ch[x+2][y+2] = map_list[x+0][y+2]
-    map_ch[x+2][y+1] = map_list[x+0][y+1]
-    map_ch[x+2][y+0] = map_list[x+2][y+2]
-    map_ch[x+1][y+0] = map_list[x+2][y+1]
+    map_ch[x + 0][y + 0] = map_list[x + 2][y + 0]
+    map_ch[x + 0][y + 1] = map_list[x + 1][y + 0]
+    map_ch[x + 0][y + 2] = map_list[x + 0][y + 0]
+    map_ch[x + 1][y + 2] = map_list[x + 0][y + 1]
+    map_ch[x + 2][y + 2] = map_list[x + 0][y + 2]
+    map_ch[x + 2][y + 1] = map_list[x + 1][y + 2]
+    map_ch[x + 2][y + 0] = map_list[x + 2][y + 2]
+    map_ch[x + 1][y + 0] = map_list[x + 2][y + 1]
     return map_ch
 
-def spin_180 (map_list, center_point):
+
+def spin_180(map_list, center_point):
     x, y = center_point
     x -= 2
     y -= 2
     map_ch = copy.deepcopy(map_list)
-    map_ch[x+0][y+0] = map_list[x+2][y+2]
-    map_ch[x+0][y+1] = map_list[x+2][y+1]
-    map_ch[x+0][y+2] = map_list[x+2][y+0]
-    map_ch[x+1][y+2] = map_list[x+1][y+0]
-    map_ch[x+2][y+2] = map_list[x+0][y+0]
-    map_ch[x+2][y+1] = map_list[x+0][y+1]
-    map_ch[x+2][y+0] = map_list[x+0][y+2]
-    map_ch[x+1][y+0] = map_list[x+1][y+2]
+    map_ch[x + 0][y + 0] = map_list[x + 2][y + 2]
+    map_ch[x + 0][y + 1] = map_list[x + 2][y + 1]
+    map_ch[x + 0][y + 2] = map_list[x + 2][y + 0]
+    map_ch[x + 1][y + 2] = map_list[x + 1][y + 0]
+    map_ch[x + 2][y + 2] = map_list[x + 0][y + 0]
+    map_ch[x + 2][y + 1] = map_list[x + 0][y + 1]
+    map_ch[x + 2][y + 0] = map_list[x + 0][y + 2]
+    map_ch[x + 1][y + 0] = map_list[x + 1][y + 2]
     return map_ch
 
-def spin_270 (map_list, center_point):
+
+def spin_270(map_list, center_point):
     x, y = center_point
     x -= 2
     y -= 2
     map_ch = copy.deepcopy(map_list)
-    map_ch[x+0][y+0] = map_list[x+0][y+2]
-    map_ch[x+0][y+1] = map_list[x+1][y+2]
-    map_ch[x+0][y+2] = map_list[x+2][y+2]
-    map_ch[x+1][y+2] = map_list[x+2][y+1]
-    map_ch[x+2][y+2] = map_list[x+2][y+0]
-    map_ch[x+2][y+1] = map_list[x+1][y+0]
-    map_ch[x+2][y+0] = map_list[x+0][y+0]
-    map_ch[x+1][y+0] = map_list[x+0][y+1]
+    map_ch[x + 0][y + 0] = map_list[x + 0][y + 2]
+    map_ch[x + 0][y + 1] = map_list[x + 1][y + 2]
+    map_ch[x + 0][y + 2] = map_list[x + 2][y + 2]
+    map_ch[x + 1][y + 2] = map_list[x + 2][y + 1]
+    map_ch[x + 2][y + 2] = map_list[x + 2][y + 0]
+    map_ch[x + 2][y + 1] = map_list[x + 1][y + 0]
+    map_ch[x + 2][y + 0] = map_list[x + 0][y + 0]
+    map_ch[x + 1][y + 0] = map_list[x + 0][y + 1]
     return map_ch
 
 
@@ -77,11 +80,11 @@ def u_acq(map_list, visited):
 
     for row in range(5):
         for col in range(5):
-            
+
             if total_visited[row][col] == False:
                 qq.append([row, col])
-            
-            visited_ = [[False]*5 for _ in range(5)]
+
+            visited_ = [[False] * 5 for _ in range(5)]
             stack = 1
             idx = map_list[row][col]
             visited_[row][col] = True
@@ -106,9 +109,11 @@ def u_acq(map_list, visited):
                             total_visited[row_][col_] = True
     return total_stack, total_visited
 
-result = 0
+
+result_list = []
 
 while k > 0:
+    result = 0
     max_num = 0
     stack_list = []
     center_point_list = []
@@ -131,28 +136,30 @@ while k > 0:
     first_spin = False
     for s in range(3):
         for c in range(9):
+
             if max_num == stack_list[c][s]:
                 center_point = center_point_list[c]
                 first_spin = True
                 spin_degree = s
                 break
-            if first_spin is True:
-                break
+        if first_spin == True:
+            break
+
     if spin_degree == 0:
         map_spin = spin_90(map_list, center_point)
         _, total_visited = u_acq(map_spin, visited)
-    elif spin_degree == 0:
+    elif spin_degree == 1:
         map_spin = spin_180(map_list, center_point)
-        _, total_visited_ = u_acq(map_spin, visited)
-    else:
+        _, total_visited = u_acq(map_spin, visited)
+    elif spin_degree == 2:
         map_spin = spin_270(map_list, center_point)
         _, total_visited = u_acq(map_spin, visited)
-    
-    if max_num > len(q):
+
+    if max_num >= len(q) or max_num ==0:
         break
 
     result += max_num
-    
+
     while True:
 
         for col in range(5):
@@ -165,9 +172,17 @@ while k > 0:
 
         stack, total_visited = u_acq(map_spin, visited)
 
+        if stack > len(q):
+            break
+
         result += stack
+
         if stack == 0:
             break
+
+    result_list.append(str(result))
+    map_list = map_spin
+
     k -= 1
 
-print(result)
+print(' '.join(result_list))
